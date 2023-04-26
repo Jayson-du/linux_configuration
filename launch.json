@@ -17,6 +17,8 @@
             "cwd": "${workspaceFolder}",
             "environment": [
                 // 填入运行时环境变量
+                {"name": "NIR_PRINT", "value": "1"},
+                {"name": "GENBU01_MESA_DEBUG", "value": "shaders"}
             ],
             "externalConsole": false,
             "MIMode": "gdb",
