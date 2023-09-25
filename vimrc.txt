@@ -1,13 +1,6 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 显示相关
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" 设置编码格式为utf-8
-set enc=utf-8
-
-" 设置文件编码格式为utf-8
-set fencs=utf-8
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim基础设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示行号
 set number
 
@@ -20,90 +13,453 @@ set ts=4
 " 表示将 TAB 键替换为空格
 set expandtab
 
-" 表示重置 TAB 键配置，就是让上面的配置生效，最后的 ! 表示处理非空白字符后的 TAB，否则只对行首的 TAB 键生效
+" 表示重置 TAB 键配置，就是让上面的配置生效，最后的 ! 表示处理非空白字符后的 TAB, 否则只对行首的 TAB 键生效
 %retab!
 
 " 让空格可见
 set list
 
 " TAB会被显示成 ">—" 而行尾多余的空白字符显示成 "-"
-set listchars=tab:>-,trail:-
+set listchars=tab:_>,trail:.
 
 " 设置自动缩进
 set autoindent
 
-
 " C自动缩进
 set cindent
-
 
 " 自动缩进空白字符个数
 set shiftwidth=4
 
-
 " tab键的一个制表符, 如果softtabstop=5, tabstop=4, 则tab是由1个制表符+1空格的混合
 set softtabstop=4
-
 
 " tab键的空格数
 set tabstop=4
 
-
-set smartindent
-
-" 设置每行最大字符数
-if exists('+colorcolumn')
-  set colorcolumn=80
-else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
-
-
 " 去除vi一致性
 set nocompatible
-" 必须
-filetype off
-
-" 显示当前行
-set cursorline
 
 " 启动时不显示援助乌干达
 set shortmess=atI
 
-" vundle安装地址
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim实用设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置光标显示追踪行
+set cursorline
+
+" 设置光标显示追踪列
+set cursorcolumn
+
+" 代码可以被收起来
+set foldmethod=indent
+
+" 启用最大级别的代码折叠
+set foldlevel=99
+
+" 启用智能缩进
+set smartindent
+
+" 显示标尺
+set ruler
+
+" 设置每行最大字符数
+if exists('+colorcolumn')
+  " 设置左标尺列数
+  set colorcolumn=80
+  " 设置右标尺列数
+  set colorcolumn+=120
+else
+  " 在任何类型的缓冲区窗口打开时, 使用matchadd()函数创建一个匹配模式, 将超过80个字符的内容以"ErrorMsg"高亮组进行标记提示
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim文件类型设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 启用文件类型检测
+filetype on
+
+" 自适应不用语言的智能缩进
+filetype indent on
+
+"设置开启文件类型侦测
+filetype on
+
+"加载对应文件类型插件
+filetype plugin on
+
+filetype plugin indent on
+
+" 设置光标键跨行
+set whichwrap+=<,>,h,l
+
+" 在vim中开启自动换行功能
+set wrap
+
+" 在状态栏上显示输入的命令
+set showcmd
+
+" 启用命令行补全菜单, 当开启 wildmenu 选项时，在输入 Ex 命令时, vim 将在命令行上方显示一个菜单，显示可能的命令补全候选项
+set wildmenu
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim搜索设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 边输入边高亮
+set incsearch
+
+" 一开始不运行'high light search'功能
+exec "nohlsearch"
+
+" 高亮显示搜索
+set hlsearch
+
+" 忽略大小写查找
+" set ignorecase
+
+" 智能搜索
+" set smartcase
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim编码设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置编码格式为utf-8
+set enc=utf-8
+
+" 设置文件编码格式为utf-8
+set fencs=utf-8
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim主题设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 启用eveing主题
+colorscheme evening
+
+"开启256色支持
+set t_Co=256
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim设置全局变量
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 启用python文件代码高亮
+let python_highlight_all=1
+
+" 将<leader>前缀键定义为','
+let mapleader = ","
+
+" 设置全局变量SnazzyTransparent为1
+let g:SnazzyTransparent = 1
+
+" 将光标设置为竖线样式
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" 检查当前光标位置前一列的字符是否与传入的char相同;如果相同,则返回 "<Right>",代表按下右方向键;如果不同,则返回 char 本身;
+" 这个函数可以用于自动补全成对的字符, 比如输入左括号 "(" 时, 自动补全右括号 ")" 并将光标移动到括号之间
+function! ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"  vim-plug在线安装插件
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 插件列表
+"call plug#begin('~/.vim/plugged')
+"    " 定制化vim状态栏插件, 显示文件信息, 编辑器当前模式, Git集成
+"    Plug 'vim-airline/vim-airline'
+"
+"    " vim美化界面插件
+"    Plug 'connorholyday/vim-snazzy'
+"
+"    " 文件目录树插件
+"    Plug 'preservim/nerdtree'
+"
+"    " 缩进提示
+"    Plug 'Yggdroot/indentLine'
+"
+"    " 代码补全插件
+"    Plug 'ycm-core/YouCompleteMe'
+"
+"    " 创建书签插件
+"    Plug 'szw/vim-tags'
+"
+"    " 注释自动生成
+"    Plug 'vim-scripts/DoxygenToolkit.vim'
+"
+"    " vim主题
+"    Plug 'tomasr/molokai'
+"
+"    " 排列文本插件
+"    Plug 'godlygeek/tabular'
+"
+"    " 缩进提示
+"    Plug 'Yggdroot/indentLine'
+"
+"    " 括号高亮
+"    Plug 'kien/rainbow_parentheses.vim'
+"
+"    " 括号补全
+"    Plug 'jiangmiao/auto-pairs'
+"call plug#end()
+
+"color snazzy
+
+" --------------------------------------------------------------------------------------------------------
+" vim-plug离线安装插件
+" 1. 安装插件管理工具
+" 2. 下载插件源码, 并拷贝到(Linux/Unix: ~/.vim/plugged/; Windows: $HOME/vimfiles/plugged/)
+" 3. 设置 'runtimepath'
+" 4. 使用runtime命令加载插件
+" ————————————————————————————————————————————————————————————————————————————————————————————————————————
+" 设置插件安装位置
+" set runtimepath+=~/.vim/plugged/SimpylFold
+
+" 使用runtime命令加载插件
+" runtime plugin/SimpylFold.vim
+" ————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vundle在线/离线安装插件
+" 1. 将插件源码(下载 | 拷贝)至: ~/.vim/plugged/目录下
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set rtp+=~/.vim/bundle/Vundle.vim
 " 插件安装地址
 call vundle#begin()
-    Plugin 'VundleVim/Vundle.vim'
-    Plugin 'Yggdroot/indentLine'                " 缩进提示
-    Plugin 'kien/rainbow_parentheses.vim'       " 括号高亮
-    Plugin 'jiangmiao/auto-pairs'               " 括号补全
-    Plugin 'tomasr/molokai'                     " vim主题
-    Plugin 'Shougo/neocomplete.vim'             " 代码补全
-    Plugin 'vim-scripts/DoxygenToolkit.vim'     " 注释自动生成
-    Plugin 'Valloric/YouCompleteMe'             " 代码补全
-    Plugin 'godlygeek/tabular'                  " 排列文本插件
-    Plugin 'plasticboy/vim-markdown'            " markdown语法高亮
-    Plugin 'suan/vim-instant-markdown'          " markdown实时预览插件
-    Plugin 'scrooloose/nerdocmmenter'           " python注释插件
-    Plugin 'preservim/nerdtree'                 " 安装文件目录树
-call vundle#end()                               " 必须
-filetype plugin indent on                       " 必须, 加载vim自带和插件相应的语法和文件类型相关脚本
+    " 定制化vim状态栏插件, 显示文件信息, 编辑器当前模式, Git集成
+    Plugin 'vim-airline/vim-airline'
 
+    " vim美化界面插件
+    Plugin 'connorholyday/vim-snazzy'
 
-colorscheme molokai                             " 设置主题
+    " 文件目录树插件
+    Plugin 'preservim/nerdtree'
 
+    " 缩进提示
+    Plugin 'Yggdroot/indentLine'
 
-let g:DoxygenToolkit_authorName="dute"          " DoxygenToolkit插件在@author区域自动填充作者名称
+    " 代码补全插件
+    Plugin 'ycm-core/YouCompleteMe'
 
+    " 创建书签插件
+    Plugin 'szw/vim-tags'
 
-let mapleader = ","
+    " 注释自动生成
+    Plugin 'vim-scripts/DoxygenToolkit.vim'
 
+    " vim主题
+    Plugin 'tomasr/molokai'
 
-map <F5> : call RunPython()<CR>
-func! RunPython()
-    exec "w"
-    if &filetype == 'python'
-        exec "!time python3 %"
+    " 排列文本插件
+    Plugin 'godlygeek/tabular'
+
+    " 括号高亮
+    Plugin 'kien/rainbow_parentheses.vim'
+
+    " 括号补全
+    Plugin 'jiangmiao/auto-pairs'
+call vundle#end()
+
+color snazzy
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 优化设置
+" map是vim中的命令, 用于创建键盘映射(key mapping), 通过使用map命令, 可以将一个按键映射到另一个按键, 一段文本或者执行特定
+" 的命令; map有多个不同的变体, 根据映射的模式进行区分, 通常有:
+" * nnoremap: 在普通模式下创建键盘映射;
+" * inoremap: 在插入模式下创建键盘映射;
+" * vnoremap: 在可视模式下创建键盘映射;
+" * cnoremap: 在命令模式下创建键盘映射;
+" <c-r>: ctrl + r
+" <CR> : enter(回车)
+" ea   : 在 Normal 模式下, 将光标移动到当前单词的末尾, 并进入插入模式, 准备继续输入
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" map全局映射
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 映射ctrl + a为ggVGY
+map <C-A> ggVGY
+
+" 插入模式下非递归映射, ctrl + A为ggVGY
+map! <C-A> <Esc>ggVGY
+
+" 映射F12格式化文档
+map <F12> gg=G
+
+" 列出当前目录文件
+map <F3> :tabnew .<CR>
+
+" 映射F2在普通模式下全局去除空行
+nnoremap <F2> :g/^\s*$/d<CR>
+
+" ********************************************************************************************************
+" 1. 使用 ctrl + w后跟方向键切换窗体
+"       * ctrl + w + h: 切换到左侧的窗口
+"       * ctrl + w + j: 切换到下方的窗口
+"       * ctrl + w + k: 切换到上方的窗口
+"       * ctrl + w + l: 切换到右侧的窗口
+" 2. ctrl + w + num, 例如 ctrl + w + 2 切换到窗口编号为2的窗口
+" 3. 连续两次 ctrl + w , 在窗口之间切换焦点
+" ********************************************************************************************************
+" 全局映射si, 在 Normal 模式下按下 si 键组合时, 先设置 splitright 选项为真, 然后在右侧创建一个新的垂直分割窗口
+map si : set splitright<CR>:vsplit<CR>
+
+" 全局映射se, 在 Normal 模式下按下 se 键组合时, 先设置 splitright 选项为真, 然后在左侧创建一个新的垂直分割窗口
+map se : set splitbelow<CR>:split<CR>
+
+" 全局映射sn, 在 Normal 模式下按下 sn 键组合时, 先设置 splitright 选项为假, 然后在右侧创建一个新的垂直分割窗口
+map sn : set nosplitright<CR>:vsplit<CR>
+
+" 全局映射sn, 在 Normal 模式下按下 su 键组合时, 先设置 splitright 选项为假, 然后在右侧创建一个新的垂直分割窗口
+map su : set nosplitbelow<CR>:split<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" nnoremap普通模式下映射
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 输入 ",n" 自动切换到NERDTree
+nnoremap <leader>n :NERDTreeFocus<CR>
+
+" 映射 ctrl + n, 打开NERDTree
+nnoremap <C-n> :NERDTree<CR>
+
+" 映射 ctrl + t, 执行NERDTreeToggle
+nnoremap <C-t> :NERDTreeToggle<CR>
+
+" 映射 ctrl + f, 执行NERDTreeFind
+nnoremap <C-f> :NERDTreeFind<CR>
+
+" 正常模式下, 映射 ctrl + u 字符快速转换为小写
+nnoremap <a-u> viwue
+
+" 正常模式下, 映射 ctrl + U 字符快速转换为大写
+nnoremap <c-U> viwUe
+
+" 快速打开vim配置文件：_vimrc
+nnoremap <leader>e :e ~/.vimrc<cr>
+
+"刷新配置
+nnoremap <leader>r :source $MYVIMRC<cr>
+
+" 普通模式下, 输入空格, 展开或者折叠代码
+nnoremap <space> za
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" inoremap插入模式下映射
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 插入模式下, 映射 ctrl + U 字符快速转换为大写
+" inoremap <c-U> <esc>viwUea
+
+" 插入模式下, 映射 ctrl + u 字符快速转换为小写
+" inoremap <c-u> <esc>viwuea
+
+" 插入模式下, 映射 esc 键为 jj
+inoremap jj <Esc>
+
+" 插入模式下, 映射',q'退出当前的编辑缓冲区
+inoremap <leader>q <Esc>:q<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim自动补全设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 自动补全'('
+:inoremap ( ()<ESC>i
+
+" 当输入')'时, 自动定位到')'左边的位置
+:inoremap ) <c-r>=ClosePair(')')<CR>
+
+" 自动补全'['
+:inoremap [ []<ESC>i
+
+" 当输入']'时, 自动定位到']'左边的位置
+:inoremap ] <c-r>=ClosePair(']')<CR>
+
+" 自动补全'{'
+:inoremap { {<CR>}<ESC>O
+
+" 当输入'}'时, 自动定位到'}'左边的位置
+:inoremap } <c-r>=ClosePair('}')<CR>
+
+" 自动补全 "
+:inoremap " ""<ESC>i
+
+" 自动补全 '
+:inoremap ' ''<ESC>i
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vmap虚拟模式下映射
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 选中状态下ctrl + c为复制
+vmap <C-c> "+y
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置加载cscope
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("cscope")
+    set csprg=/usr/bin/cscope
+    set csto=0
+    set cst
+    " 显示添加是否成功
+    " set csverb
+    set cspc=3
+    " add any database in current dir
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else search cscope.out elsewhere
+    else
+       let cscope_file=findfile("cscope.out", ".;")
+       let cscope_pre=matchstr(cscope_file, ".*/")
+       if !empty(cscope_file) && filereadable(cscope_file)
+           exe "cs add" cscope_file cscope_pre
+       endif
+     endif
+endif
+
+autocmd BufNewFile *.cpp execute ":normal i/*\r * Filename: %\r * Author: Your Name\r * Date: ".strftime("%Y-%m-%d")."\r */\r"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 新建文件标题
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 在 Vim 中打开一个以 .cpp, .c, .h, .sh, 或 .java 结尾的新文件时, vim 将自动调用 SetTitle() 函数
+autocmd BufNewFile *.cpp, *.[ch], *.sh, *.java, exec ":call SetTitle()"
+
+" 定义函数SetTitle, 自动插入文件头
+func SetTitle()
+    "如果文件类型为.sh文件
+    if &filetype == 'sh'
+        call setline(1,"\#########################################################################")
+        call append(line("."), "\# File Name: ".expand("%"))
+        call append(line(".")+1, "\# Author: zll")
+        call append(line(".")+2, "\# mail: zhnlion@126.com")
+        call append(line(".")+3, "\# Created Time: ".strftime("%c"))
+        call append(line(".")+4, "\#########################################################################")
+        call append(line(".")+5, "\#!/bin/bash")
+        call append(line(".")+6, "")
+    else
+        call setline(1, "/*************************************************************************")
+        call append(line("."), "    > File Name: ".expand("%"))
+        call append(line(".")+1, "    > Author: zll")
+        call append(line(".")+2, "    > Mail: zhnllion@126.com ")
+        call append(line(".")+3, "    > Created Time: ".strftime("%c"))
+        call append(line(".")+4, " ************************************************************************/")
+        call append(line(".")+5, "")
     endif
+    if &filetype == 'cpp'
+        call append(line(".")+6, "#include<iostream>")
+        call append(line(".")+7, "using namespace std;")
+        call append(line(".")+8, "")
+    endif
+    if &filetype == 'c'
+        call append(line(".")+6, "#include<stdio.h>")
+        call append(line(".")+7, "")
+    endif
+
+    "新建文件后，自动定位到文件末尾
+    autocmd BufNewFile * normal G
 endfunc
