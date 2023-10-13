@@ -64,6 +64,9 @@ set smartindent
 " 显示标尺
 set ruler
 
+" 设置跨vim复制
+set clipboard=unnamedplus
+
 " 设置每行最大字符数
 if exists('+colorcolumn')
   " 设置左标尺列数
