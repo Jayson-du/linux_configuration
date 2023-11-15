@@ -19,8 +19,8 @@ set expandtab
 " 让空格可见
 set list
 
-" TAB会被显示成 ">—" 而行尾多余的空白字符显示成 "-"
-set listchars=tab:_>,trail:.
+" TAB会被显示成 >— 而行尾多余的空白字符显示成 -
+set listchars=tab:>-,trail:. 
 
 " 设置自动缩进
 set autoindent
@@ -430,7 +430,10 @@ if has("cscope")
      endif
 endif
 
-autocmd BufNewFile *.cpp execute ":normal i/*\r * Filename: %\r * Author: Your Name\r * Date: ".strftime("%Y-%m-%d")."\r */\r"
+autocmd BufNewFile *.c,*.cpp execute ":normal i/*\r * Filename: %\r * Author: Your Name\r * Date: ".strftime("%Y-%m-%d")."\r */\r"
+
+" 保存自动删除行尾多余空格
+autocmd BufWritePost * :%s/\s\+$//
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 新建文件标题
