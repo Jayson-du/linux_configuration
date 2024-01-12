@@ -281,6 +281,15 @@ call vundle#begin()
 
     " 括号补全
     Plugin 'jiangmiao/auto-pairs'
+    
+    " 语法检查和语义错误
+    Plugin 'w0rp/ale'
+
+    " ctags
+    Plugin 'universal-ctags/ctags'
+    
+    " 空行显示线条
+    Plugin 'itchyny/lightline.vim'
 call vundle#end()
 
 color snazzy
