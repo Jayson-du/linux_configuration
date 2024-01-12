@@ -1,0 +1,10 @@
+#!/usr/bin/expect
+set ip [lindex $argv 0]
+set time 10
+spawn ssh -X $ip
+expect {
+    "*password:" { send " 密码\r" }\
+    ".*continue.*?" { send "yes\r\" send " 密码\r" }
+}
+interact
+!
