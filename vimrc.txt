@@ -78,6 +78,20 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
+"显示状态栏
+set laststatus=2  "显示状态栏
+
+"上面的状态栏展示信息比较多
+"set statusline+=%{&ff}  "显示文件格式类型
+"set statusline+=%h  "帮助文件标识
+"set statusline+=%m  "可编辑文件标识
+"set statusline+=%r  "只读文件标识
+"set statusline+=%y  "文件类型
+"set statusline+=%c  "光标所在列数
+"set statusline+=%l/%L  "光标所在行数/总行数
+"set statusline+=\ %P  "光标所在位置占总文件百分比
+set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim文件类型设置
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
