@@ -20,7 +20,7 @@ set expandtab
 set list
 
 " TAB会被显示成 >— 而行尾多余的空白字符显示成 -
-set listchars=tab:>-,trail:. 
+set listchars=tab:>-,trail:.
 
 " 设置自动缩进
 set autoindent
@@ -42,6 +42,21 @@ set nocompatible
 
 " 启动时不显示援助乌干达
 set shortmess=atI
+
+" 右下角显示搜索索引
+set shortmess-=S
+
+" 开启语法纠错
+set noeb
+
+" 关闭响铃提示
+set vb t_vb=
+
+" 开启相对行号
+set relativenumber
+
+" 跨行设置光标键
+set whichwrap+=<,>,h,l
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim实用设置
@@ -78,8 +93,11 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
-"显示状态栏
+" 显示状态栏
 set laststatus=2  "显示状态栏
+
+" 允许光标移动到行尾
+set virtualedit=block,onemore
 
 "上面的状态栏展示信息比较多
 "set statusline+=%{&ff}  "显示文件格式类型
@@ -91,6 +109,12 @@ set laststatus=2  "显示状态栏
 "set statusline+=%l/%L  "光标所在行数/总行数
 "set statusline+=\ %P  "光标所在位置占总文件百分比
 set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)
+
+" 修改后自动加载变更
+set autoread
+
+" 自动保存
+set autowrite
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim文件类型设置
@@ -148,14 +172,17 @@ set enc=utf-8
 " 设置文件编码格式为utf-8
 set fencs=utf-8
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim主题设置
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 启用eveing主题
-colorscheme evening
+" 设置语言菜单
+set langmenu=zh_CN.UTF-8
 
-"开启256色支持
-set t_Co=256
+" 设置帮助文档语言
+set helplang=cn
+
+" 设置终端编解码选项
+set termencoding=utf-8   " set term encode
+
+" 打开文件时使用的字符编码列表
+set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030 " set detect encode of file
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim设置全局变量
@@ -252,6 +279,8 @@ call vundle#begin()
     " 定制化vim状态栏插件, 显示文件信息, 编辑器当前模式, Git集成
     Plugin 'vim-airline/vim-airline'
 
+    Plugin 'vim-airline/vim-airline-themes'
+
     " vim美化界面插件
     Plugin 'connorholyday/vim-snazzy'
 
@@ -281,18 +310,117 @@ call vundle#begin()
 
     " 括号补全
     Plugin 'jiangmiao/auto-pairs'
-    
+
     " 语法检查和语义错误
     Plugin 'w0rp/ale'
 
     " ctags
     Plugin 'universal-ctags/ctags'
-    
+
     " 空行显示线条
     Plugin 'itchyny/lightline.vim'
+
+    " Plugin 'vim-syntastic/syntastic'
+
+    " Plugin 'morhetz/gruvbox'
+
+    " vim颜色主题插件(https://github.com/tomasiser/vim-code-dark?tab=readme-ov-file)
+    Plugin 'tomasiser/vim-code-dark'
+
+    " Plugin 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
+
+    " Python语法高亮
+    Plugin 'vim-python/python-syntax', {'for':'py'}
+
+    " run shell in async
+    " Plugin 'skywind3000/asyncrun.vim'
+
+    " Plugin 'rhysd/vim-clang-format'
 call vundle#end()
 
 color snazzy
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim主题设置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 启用eveing主题
+colorscheme codedark
+
+"开启256色支持
+set t_Co=256
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置airline
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline_theme="molokai"
+"这个是安装字体后 必须设置此项"
+let g:airline_powerline_fonts = 1
+
+"打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" 关闭状态显示空白符号计数
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+" 设置consolas字体"前面已经设置过
+ "set guifont=Consolas\ for\ Powerline\ FixedD:h11
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+" old vim-powerline symbols
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置vim-code-dark的配置
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:clang_format#style_options = {
+"             \ "AccessModifierOffset" : -4,
+"             \ "AllowShortIfStatementsOnASingleLine" : "true",
+"             \ "AlwaysBreakTemplateDeclarations" : "true",
+"             \ "Standard" : "C++11"}
+
+" " map to <Leader>cf in C++ code
+" autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+" autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" " if you install vim-operator-user
+" autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" " Toggle auto formatting:
+" nmap <Leader>C :ClangFormatAutoToggle<CR>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置c/cpp 关键字, 变量, 函数颜色
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"find and comment out
+"syn keyword    cStructure  struct union enum typedef
+
+" syn match cFunctions    "\<[a-zA-Z_][a-zA-Z0-9_]*\>\s*("me=e-1
+" syn match cStruct       "\(struct\|union\|enum\|typedef\)\{1}\s\+\<[a-zA-Z_][a-zA-Z0-9_]*\>\(\s*\**\s*\)*[);]\?\s*\n*"me=e-1 contains=cVar
+" syn match cVar          "\(\s*\**\s*\)*&\?\s*\<[a-zA-Z_][a-zA-Z0-9_]*\>\s*[,\);:=\>\<\-+\|\&\.\[\]]"me=e-1 contains=cStruct,cStatement,cMacro,cType
+" syn match cStrMbrP      "\->\<[a-zA-Z_][a-z_A-Z0-9]*\>" contains=cStruct
+" syn match cStrMbrM      "\.\<[a-zA-Z_][a-z_A-Z0-9]*\>" contains=cStruct
+" syn match cMacro        "\s*\<[A-Z][a-zA-Z0-9_]*\>\s*[a-zA-Z0-9_,\);:\"\'=><\-+\|\&\.\[\]]\|(\->)\?\s*\n*"me=e-1 contains=cStruct
+
+" hi cFunctions   gui=none cterm=bold ctermfg=214
+" hi cStruct      gui=none cterm=bold ctermfg=45
+" hi cVar         gui=none cterm=none ctermfg=96
+" hi cStrMbrP     gui=none cterm=none ctermfg=196
+" hi cStrMbrM     gui=none cterm=none ctermfg=201
+" hi cMacro       gui=none cterm=none ctermfg=159
+" hi cType        gui=none cterm=bold ctermfg=45
+" hi cDefine      gui=none cterm=none ctermfg=159
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 优化设置
@@ -355,8 +483,8 @@ nnoremap <leader>n :NERDTreeFocus<CR>
 " 映射 ctrl + n, 打开NERDTree
 nnoremap <C-n> :NERDTree<CR>
 
-" 映射 ctrl + t, 执行NERDTreeToggle
-nnoremap <C-t> :NERDTreeToggle<CR>
+" 映射 ctrl + x, 执行NERDTreeToggle
+nnoremap <C-x> :NERDTreeToggle<CR>
 
 " 映射 ctrl + f, 执行NERDTreeFind
 nnoremap <C-f> :NERDTreeFind<CR>
@@ -418,10 +546,10 @@ inoremap <leader>q <Esc>:q<cr>
 " 当输入'}'时, 自动定位到'}'左边的位置
 :inoremap } <c-r>=ClosePair('}')<CR>
 
-" 自动补全 "
+" 自动补全
 :inoremap " ""<ESC>i
 
-" 自动补全 '
+" 自动补全
 :inoremap ' ''<ESC>i
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -453,8 +581,6 @@ if has("cscope")
      endif
 endif
 
-autocmd BufNewFile *.c,*.cpp execute ":normal i/*\r * Filename: %\r * Author: Your Name\r * Date: ".strftime("%Y-%m-%d")."\r */\r"
-
 " 保存自动删除行尾多余空格
 autocmd BufWritePost * :%s/\s\+$//
 
@@ -464,9 +590,12 @@ autocmd BufWritePost * :%s/\s\+$//
 " 在 Vim 中打开一个以 .cpp, .c, .h, .sh, 或 .java 结尾的新文件时, vim 将自动调用 SetTitle() 函数
 autocmd BufNewFile *.cpp, *.[ch], *.sh, *.java, exec ":call SetTitle()"
 
+" 新建文件自动添加头注释
+autocmd BufNewFile *.c,*.cpp execute ":normal i/*\r * Filename: %\r * Author: Your Name\r * Date: ".strftime("%Y-%m-%d")."\r */\r"
+
 " vim打开文件时光标返回上次离开的位置
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 endif
 
 " 定义函数SetTitle, 自动插入文件头
