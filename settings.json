@@ -1,0 +1,75 @@
+{
+    /* ------------------------------
+     * ---------- 字体设置 ----------
+       ------------------------------ */
+    "editor.fontLigatures": true,                               // 启用字体连字
+    "editor.fontFamily": "Monaco, '思源黑体', monospace",        // 设置字体(英文, 中文, 等宽字体)
+
+    /* ------------------------------
+     * ---------- 标尺设置 ----------
+       ------------------------------ */
+    "editor.rulers": [90, 120],                                 // 设置标尺
+
+    /* ------------------------------
+     * ---------- tab与空格 ----------
+       ------------------------------ */
+    "editor.tabSize": 4, // tab为四个空格
+    "editor.detectIndentation": false,                          // 关闭检测第一个tab后面就tab
+    "editor.renderControlCharacters": true,                     // 制表符显示->
+    "editor.renderWhitespace": "all",                           // 空格显示...
+    "editor.insertSpaces": true,                                // 按下Tab键插入空格
+    "editor.tabCompletion": true,                               // 敲入tab, 自动补全
+    "editor.stickyTabStops": true,                              // 在缩进上移动光标时四个空格一组来移动，就仿佛它们是制表符(\t)一样
+    "editor.renderControlCharacters": true,                     // 编辑器中显示不可见的控制字符
+
+    /* ------------------------------
+     * ---------- 光标设置 -----------
+       ------------------------------ */
+    "editor.cursorBlinking": "smooth",                          // 使编辑器光标的闪烁平滑，有呼吸感
+    "editor.cursorSmoothCaretAnimation": true,                  // 让光标移动、插入变得平滑
+    "editor.copyWithSyntaxHighlighting": false,                 // 复制代码时复制纯文本而不是连语法高亮都复制了
+
+    /* ------------------------------
+     * ---------- 复制粘贴 -----------
+       ------------------------------ */
+    "editor.formatOnPaste": true,                               // 在粘贴时, 自动格式化
+    "editor.copyWithSyntaxHighlighting": false,                 // 复制代码时, 仅复制纯文本, 不复制语法高亮
+
+    /* ------------------------------
+     * ---------- 文本格式化 ----------
+       ------------------------------ */
+    "editor.formatOnType": true,                                // 敲完一行代码自动格式化
+    "editor.wordBasedSuggestions": true,                        // 打开基于文件中单词来联想的功能
+    "editor.wordWrap": "on",                                    // 在文件内容溢出vscode显示区域时自动折行
+    "editor.linkedEditing": true,                               // html标签自动重命名（喜大普奔！终于不需要Auto Rename Tag插件了！）
+    "editor.suggest.snippetsPreventQuickSuggestions": false,    // 这个开不开效果好像都一样，据说是因为一个bug，建议关掉
+    "editor.autoIndent": "full",                                // 设置自动换行缩进
+
+
+    /* ------------------------------
+     * ---------- 文本格式化 ----------
+       ------------------------------ */
+    "files.trimTrailingWhitespace": true,                       // 保存时自动去除行尾多余空格
+    "files.encoding": "utf8",                                   // 设置文件编码格式为utf-8
+    "files.eol": "auto",                                        // 行尾设置
+    "files.associations": {                                     // 根据文件后缀名, 自动联想语言
+        "*.cc": "cpp",
+        "*.cpp": "cpp",
+        "*.hpp": "cpp",
+        "*.def": "cpp",
+        "*.inc": "cpp",
+        "*.c": "c",
+        "*.h": "c",
+        "*.py": "python",
+        "*.lua": "lua",
+        "*.json": "json",
+        "*.log": "text",
+    },
+    "files.autoSave":"off",                                     // 关闭自动保存功能
+    "files.autoSaveDelay": 1000,                                // 设置延迟保存时间
+    "files.autoGuessEncoding": false,                           // 关闭猜测文件格式
+    "files.autoSaveWhenNoErrors": false,                        // 保存时不论是否有错误
+    "files.dialog.defaultPath": "D:/log/vscode_log",            // 设置vscode每日输出日志
+    "files.enableTrash": true,                                  // 在vscode上删除文件, 不是永久性删除
+    "files.restoreUndoStack": true,                             // 保存undo行为
+}
