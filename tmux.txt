@@ -1,0 +1,30 @@
+# 修改默认延时
+set -sg escape-time 1
+
+# 设置为 PREFIX r，让它重新加载当前 tmux 会话
+bind r source-file ~/.tmux.conf\; display "Reloaded!"
+
+# 重新映射移动键
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# 定义 PREFIX CTRL-h 键和 PREFIX CTRL-l 键在窗口之间循环切换
+bind -r C-h select-window -t :-
+bind -r C-l select-window -t :+
+
+# 使用 PREFIX H，PREFIX J，PREFIX K 和 PREFIX L 键调整面板的尺寸
+bind H resize-pane -L 5
+bind J resize-pane -D 5
+bind K resize-pane -U 5
+bind L resize-pane -R 5
+
+# 使用鼠标滚轮在终端的缓冲区里向上滚屏
+# setw -g mode-mouse on
+
+# 让 tmux 以 256 色模式显示内容
+set -g default-terminal "screen-256color"
+
+# 使用 vi 模式操作缓冲区的功能
+setw -g mode-keys vi
