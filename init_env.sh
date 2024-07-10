@@ -56,18 +56,15 @@ APPS_ARRAY=(cmake
             cscope
             gcc
             g++
+            ninja-build
             graphviz
             git
             tig
             net-tools
             default-jre
             default-jdk
-            # nvidia-opencl-dev
-            # nvidia-libopencl1-384
-            # nvidia-opencl-icd-384
             htop
             clang
-            llvm-15-dev
             )
 
 for i in ${APPS_ARRAY[@]}
