@@ -27,7 +27,7 @@ function network() {
   local target=www.baidu.com
 
   # 获取响应状态码
-  ret_code=`curl -I -s --connect-timeout $timeout $target -w %{http_code} | tail -n1`
+  ret_code=$(curl -I -s --connect-timeout $timeout $target -w %{http_code} | tail -n1)
 
   if [ "x$ret_code" = "x200" ]; then
     # 网络连接正常
@@ -52,23 +52,24 @@ success "网络连接正常"
 
 # 安装需要的软件
 APPS_ARRAY=(cmake
-            universal-ctags
-            cscope
-            gcc
-            g++
-            ninja-build
-            graphviz
-            git
-            tig
-            net-tools
-            default-jre
-            default-jdk
-            htop
-            clang
-            )
+  universal-ctags
+  cscope
+  gcc
+  g++
+  ninja-build
+  graphviz
+  git
+  tig
+  net-tools
+  default-jre
+  default-jdk
+  htop
+  clang
+  expect
+  python3-dev
+)
 
-for i in ${APPS_ARRAY[@]}
-do
+for i in ${APPS_ARRAY[@]}; do
   sudo apt-get install $i -y
 done
 
