@@ -1,17 +1,17 @@
 #!/usr/bin/bash
+# -*- coding : utf-8 -*-
 
-echo "自动化初始Linux开发环境"
+echo -e "\e[0;32m***自动化初始Linux开发环境***\e[1;32m"
 
 curr_path="$(cd $(dirname $0) && pwd)"
 
 # 创建env目录, 用于存放常用脚本
-function create_env() {
+function create_env_folder() {
   if [ ! -d "~/env" ]; then
-    mkdir ~/env/ && mkdir ~/env/shell_script
+    mkdir ~/env/ && mkdir ~/env/color
   fi
 
-  if [ ! -f "~/env/shell_script/color_print.sh" ]; then
-    echo "not found"
+  if [ ! -f "~/env/color/color_print.sh" ]; then
     cp ${curr_path}/color_print.sh ~/env/shell_script/
   fi
 
@@ -19,7 +19,7 @@ function create_env() {
 }
 
 # 检测网络
-function network() {
+function check_network() {
   # 超时时间
   local timeout=1
 
@@ -40,11 +40,11 @@ function network() {
   return -1
 }
 
-create_env
+create_env_folder
 
-network
+check_network
 if [ $? -eq 1 ]; then
-  echo "网路连接断开"
+  warn "网路连接断开"
   exit -1
 fi
 
@@ -57,6 +57,7 @@ APPS_ARRAY=(cmake
   gcc
   g++
   gcc-multilib
+  gdb
   ninja-build
   graphviz
   git
@@ -75,8 +76,16 @@ for i in ${APPS_ARRAY[@]}; do
   sudo apt-get install $i -y
 done
 
+# 配置git
+normal_log "配置git"
 git config --global user.name "jayson"
 git config --global user.email "315843093@qq.com"
 git config --global core.editor "vim"
+normal_log "配置git完成"
 
-# git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# 配置vim插件
+normal_log "配置vim"
+cp ${curr_path}/vimrc/vimrc.txt ~/.vimrc
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qll
+normal_log "配置vim完成"

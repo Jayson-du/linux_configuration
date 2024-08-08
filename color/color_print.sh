@@ -26,6 +26,6 @@ function error() { echo -e "${RED_BOLD}  Error:   ${RED}$1${RESET}\n"; exit 1; }
 
 function option() { echo -n -e "${GREEN_BOLD}${1}${Reset}"; }
 
-function blue_log() { echo -e "${BLUE_BOLD}${1}${Reset}"; }
+function normal_log() { echo -e "${BLUE_BOLD}${1}${Reset}"; }
 
 function fatal_log() { echo -e "${RED_BOLD}${1}${Reset}";  exit 0; }
