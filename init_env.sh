@@ -56,6 +56,7 @@ APPS_ARRAY=(cmake
   cscope
   gcc
   g++
+  gcc-multilib
   ninja-build
   graphviz
   git
