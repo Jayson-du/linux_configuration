@@ -1,4 +1,4 @@
-# /usr/bin/bash
+#!/usr/bin/bash
 
 echo "自动化初始Linux开发环境"
 
@@ -67,6 +67,7 @@ APPS_ARRAY=(cmake
   clang
   expect
   python3-dev
+  tmux
 )
 
 for i in ${APPS_ARRAY[@]}; do
