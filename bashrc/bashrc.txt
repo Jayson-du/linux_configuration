@@ -120,3 +120,4 @@ alias github='cd /home/jayson/github'
 alias jayson='cd /home/jayson/jayson'
 alias env='cd /home/jayson/env'
 alias buildscript="bash ~/env/touch_exe/exec_build.sh $1"
+alias execscript="bash ~/env/touch_exe/exec.sh $1 $2"

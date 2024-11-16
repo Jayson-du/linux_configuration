@@ -88,5 +88,5 @@ normal_log "配置git完成"
 normal_log "配置vim"
 cp ${curr_path}/vimrc/vimrc.txt ~/.vimrc
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim +PluginInstall +qll
+vim +PluginInstall +qall
 normal_log "配置vim完成"
