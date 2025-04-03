@@ -333,9 +333,10 @@ call vundle#begin()
     Plugin 'vim-python/python-syntax', {'for':'py'}
 
     " run shell in async
-    " Plugin 'skywind3000/asyncrun.vim'
+    Plugin 'skywind3000/asyncrun.vim'
 
-    " Plugin 'rhysd/vim-clang-format'
+    " vim clang-format插件
+    Plugin 'rhysd/vim-clang-format'
 call vundle#end()
 
 color snazzy
@@ -630,3 +631,6 @@ func SetTitle()
     "新建文件后，自动定位到文件末尾
     autocmd BufNewFile * normal G
 endfunc
+
+" vim保存后, 自动调用clang-format去格式化代码
+autocmd BufWritePre *.c,*.h,*.cpp,*.hpp,*.cc,*.hh,*.cc execute 'normal! gg=G'
