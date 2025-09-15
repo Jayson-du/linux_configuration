@@ -7,7 +7,8 @@ source ~/env/color/color_print.sh
 
 path="$(cd $(dirname $0) && pwd)"
 
-if [ -d "${path}/build" ]; then
+if [ ! -d "${path}/build" ]; then
+    echo "del CMakeCache.txt"
     rm -f ${path}/build/CMakeCache.txt
 fi
 
