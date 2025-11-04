@@ -71,6 +71,7 @@ APPS_ARRAY=(cmake
   expect
   python3-dev
   tmux
+  clangd
 )
 
 for i in ${APPS_ARRAY[@]}; do
