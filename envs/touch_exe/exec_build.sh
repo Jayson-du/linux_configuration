@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+path="$(cd $(dirname $0) && pwd)"
+
+color_print_sh_path="$path/../../color/color_print.sh"
+
 # 输出简单的脚本内容
 message=$(cat << 'EOF'
 #!/usr/bin/env bash
-source ~/env/color/color_print.sh
+source "$color_print_sh_path"
 
 path="$(cd $(dirname $0) && pwd)"
 
@@ -22,8 +26,7 @@ cmake --build build
 EOF
 )
 
+# 替换 $color_print_sh_path 为实际值
+message="${message//\$color_print_sh_path/$color_print_sh_path}"
+
 touch $1/exec_build.sh && chmod +x $1/exec_build.sh && echo "$message" > $1/exec_build.sh
-
-
-
-
