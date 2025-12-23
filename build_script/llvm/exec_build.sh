@@ -1,5 +1,36 @@
 #!/usr/bin/bash
 
+# 判断当前机器的内存和交换分区大小，如果不足则创建一个32G的交换分区
+memory_size=$(free -h | awk 'NR==2 {print $2}' | egrep -o '[0-9\.]+')
+swap_size=$(free -h | awk 'NR==3 {print $2}' | cut -d'.' -f1)
+
+if [ $swap_size -lt 32 ] && [ $memory_size -lt 64 ];then
+  pushd $(pwd)
+
+  # 进入根目录
+  cd /
+
+  # 1. 禁用当前 swap
+  sudo swapoff /swapfile
+
+  # 2. 删除旧文件
+  sudo rm /swapfile
+
+  # 3. 创建新的 32G swap 文件
+  sudo fallocate -l 32G /swapfile
+
+  # 4. 设置权限并启用
+  sudo chmod 600 /swapfile
+
+  # 5. 格式化为 swap 分区
+  sudo mkswap /swapfile
+
+  # 6. 启用 swap
+  sudo swapon /swapfile
+
+  popd
+fi
+
 path="$(cd $(dirname $0) && pwd)"
 
 if [ -f "${path}/build/CMakeCache.txt" ]; then
