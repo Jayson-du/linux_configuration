@@ -68,7 +68,7 @@ function install_lib_array() {
       normal_log "Proceeding with installation of $lib..."
       # 安装需要的软件
       normal_log "sudo apt-get install -y $lib"
-      sudo apt-get install ${app} -y
+      sudo apt-get install ${lib} -y
     else
       normal_log "$lib is already installed, skipping..."
     fi

@@ -49,6 +49,12 @@ LIB_ARRAY=(
   graphviz
 )
 
+title "Installing required applications and libraries..."
+
+# 首先更新包列表,
+# 第一次重装系统, 没有更新源, 会导致找不到包
+sudo apt-get update
+
 # 安装程序
 install_app_dict APPS_DICT
 
