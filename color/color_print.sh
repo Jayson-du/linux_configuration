@@ -22,7 +22,7 @@ function warn() { echo -e "${YELLOW_BOLD}  Warning: ${1} ${RESET}"; }
 
 function success() { echo -e "${GREEN}  Success: ${1} ${RESET}"; }
 
-function error() { echo -e "${RED_BOLD}  Error:   ${RED}$1${RESET}\n"; exit 1; }
+function error() { echo -e "${RED_BOLD}  Error:   ${RED}$1${RESET}"; exit 1; }
 
 function option() { echo -n -e "${GREEN_BOLD}${1}${Reset}"; }
 
