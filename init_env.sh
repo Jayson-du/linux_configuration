@@ -47,6 +47,7 @@ LIB_ARRAY=(
   gcc-multilib
   g++-multilib
   graphviz
+  openssh-server
 )
 
 title "Installing required applications and libraries..."
