@@ -7,6 +7,10 @@
 # 获取当前脚本的路径
 project=${1}
 
+if [ -z "$project" ]; then
+  project="$(cd $(dirname $0) && pwd)"
+fi
+
 # 获取颜色输出
 source $project/color/color_print.sh
 
@@ -170,11 +174,45 @@ function config_git() {
 function config_vim() {
   normal_log "配置vim"
 
+  local current_path=$project
+
   if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   fi
 
-  cp ${current_path}/vimrc/vimrc.txt ~/.vimrc
-  vim +PluginInstall +qall
+  # 检查是否为 Neovim
+  if command -v nvim >/dev/null 2>&1; then
+    normal_log "检测到 Neovim，使用 Neovim 配置"
+    mkdir -p ~/.config/nvim
+    cp ${current_path}/vimrc/vimrc.txt ~/.config/nvim/init.vim
+    nvim +PluginInstall +qall
+  else
+    cp ${current_path}/vimrc/vimrc.txt ~/.vimrc
+    vim +PluginInstall +qall
+  fi
+
   normal_log "配置vim完成"
+}
+
+
+# -* 配置自定义别名 *-
+function config_path_alias() {
+  normal_log "配置自定义别名"
+
+  local current_path=$project
+
+  data_dir=$(echo $path | awk -F 'jayson/linux' '{print $1}' | sed 's|/$||')
+
+  echo "alias github='cd $data_dir/github'
+alias jayson='cd $data_dir/jayson'
+alias summary='cd $data_dir/summary'
+alias apps='cd $data_dir/apps'
+alias clash='cd $data_dir/apps/clash'
+alias mesa='cd $data_dir/github/mesa'
+alias mesa_main='cd $data_dir/github/mesa_main'
+alias practice='cd $data_dir/practice'
+alias amd_rocm='cd $data_dir/rocm-all-libs-build'
+" >> $current_path/envs/path_alias/path_alias
+
+  normal_log "配置自定义别名完成"
 }

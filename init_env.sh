@@ -6,7 +6,7 @@ current_path="$(cd $(dirname $0) && pwd)"
 
 # 获取颜色输出
 source $current_path/color/color_print.sh
-source $current_path/util/util.sh
+source $current_path/util/util.sh $current_path
 
 normal_log "\e[0;32m***自动化初始Linux开发环境***\e[1;32m"
 
@@ -62,7 +62,13 @@ install_app_dict APPS_DICT
 # 安装包
 install_lib_array "${LIB_ARRAY[@]}"
 
-# 配置bashrc
-config_bashrc
+config_path_alias
 
 # install_miniconda
+
+config_vim
+
+config_git
+
+# 配置bashrc
+config_bashrc
