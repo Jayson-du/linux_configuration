@@ -255,6 +255,7 @@ function config_action_alias() {
 alias execscript='bash ${project}/envs/action/create_file/exec.sh \$1 \$2'
 alias torch_v='bash ${project}/envs/action/torch/torch_v.sh'
 alias create_swapfile='bash ${project}/envs/action/create_swapfile/create_swapfile.sh'
+alias check_gpu_info='python3 ${project}/envs/action/gpu_info/check_gpu_info.py'
 " >> $project/envs/action/action_alias
 
   echo "project=${project}" >> $project/envs/action/project
