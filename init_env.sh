@@ -64,6 +64,8 @@ install_lib_array "${LIB_ARRAY[@]}"
 
 config_path_alias
 
+config_action_alias
+
 # install_miniconda
 
 config_vim
