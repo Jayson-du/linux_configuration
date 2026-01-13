@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 path="$(cd $(dirname $0) && pwd)"
-
-color_print_sh_path="$path/../../color/color_print.sh"
+source ${path}/../project
+source ${project}/color/color_print.sh
+color_print_sh_path="${project}/color/color_print.sh"
 
 # 输出简单的脚本内容
 message=$(cat << 'EOF'

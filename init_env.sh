@@ -70,5 +70,11 @@ config_vim
 
 config_git
 
+# 安装miniconda
+# install_miniconda
+
+# 配置ssh
+config_ssh
+
 # 配置bashrc
 config_bashrc

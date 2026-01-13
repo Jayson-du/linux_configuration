@@ -1,14 +1,16 @@
 #!/usr/bin/bash
 
-path=$(cd $(dirname $0)&& pwd)
-source ${path}/../../color/color_print.sh
+path="$(cd $(dirname $0) && pwd)"
+source ${path}/../project
+
+source ${project}/color/color_print.sh
 
 if [ $# -gt 0 ]; then
   path=$1
 
   if [ ! -d $path ]; then
-    echo "Directory $path does not exist."
-    exit
+    error "Directory $path does not exist."
+    exit 1
   fi
 
   shift 1

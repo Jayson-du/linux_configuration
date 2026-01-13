@@ -5,15 +5,27 @@
 # -* 安装软件函数 *-
 
 # 获取当前脚本的路径
+# project 表示linux_configuration项目路径
 project=${1}
 
+echo "project path: ${project}"
+
+# 必须传入当前Configuration路径参数
 if [ -z "$project" ]; then
-  project="$(cd $(dirname $0) && pwd)"
+  echo -e "\e[0;31m *** 未传入当前Configuration脚本路径参数 ***\e[1;31m "
+  exit 1
 fi
 
-# 获取颜色输出
+# -* 获取颜色输出 *-
 source $project/color/color_print.sh
 
+# data表示数据盘路径, 如/home/jayson
+# 也有可能~不是数据盘地址
+data=$(echo $project | awk -F 'jayson/linux' '{print $1}' | sed 's|/$||')
+
+success "---- 当前数据盘目录为: ${data} ----"
+
+# 检测应用是否安装
 function check_apps_need_install() {
   local app_name=$1
   normal_log "check $app_name..."
@@ -27,6 +39,7 @@ function check_apps_need_install() {
   fi
 }
 
+# -* 安装应用函数 *-
 function install_app_dict() {
   declare -n apps_dict=$1
 
@@ -45,6 +58,7 @@ function install_app_dict() {
   done
 }
 
+# -* 检测库是否安装 *-
 function check_lib_need_installed() {
   local lib_array=("$@")
 
@@ -61,6 +75,7 @@ function check_lib_need_installed() {
   done
 }
 
+# -* 安装库 *-
 function install_lib_array() {
   local lib_array=("$@")
 
@@ -79,10 +94,17 @@ function install_lib_array() {
   done
 }
 
+# -* 安装miniconda *-
 function install_miniconda() {
-  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -P ~/apps/backup
+  # 安装miniconda到$data/apps/miniconda3， 一般要将miniconda安装到数据盘
+  # 否则使用默认路径 ~/miniconda3
+  local install_path=${data:-~/miniconda3}/apps
+  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -P ${install_path}/backup
+  bash ${install_path}/backup/Miniconda3-latest-Linux-x86_64.sh -b -p "$install_path/miniconda3"
 
-  bash ~/apps/backup/Miniconda3-latest-Linux-x86_64.sh
+  ${install_path}/miniconda3/bin/conda init
+  conda create --name dlc python=3.12.12 -y
+  conda activate dlc
 }
 
 # -* 检测网络 *-
@@ -139,11 +161,14 @@ function config_bashrc() {
   sed -i '$a\
 \
 # jayson custom config\
-alias buildscript="bash /home/jayson/jayson/linux_configuration/envs/touch_exe/exec_build.sh \$1"\
-alias execscript="bash /home/jayson/jayson/linux_configuration/envs/touch_exe/exec.sh \$1 \$2"\
+source '${project}/envs/action/action_alias'\
 \
-source /home/jayson/jayson/linux_configuration/envs/path_alias/path_alias
+source '${project}/envs/path_alias/path_alias'\
+\
+conda activate tgi_test
 ' ~/.bashrc
+
+source ~/.bashrc
 }
 
 # -* 配置git *-
@@ -194,25 +219,52 @@ function config_vim() {
   normal_log "配置vim完成"
 }
 
-
 # -* 配置自定义别名 *-
 function config_path_alias() {
   normal_log "配置自定义别名"
 
-  local current_path=$project
+  if [ ! -d "$project/envs/path_alias" ]; then
+    normal_log "创建路径 $project/envs/path_alias"
+    mkdir -p $project/envs/path_alias
+  fi
 
-  data_dir=$(echo $path | awk -F 'jayson/linux' '{print $1}' | sed 's|/$||')
-
-  echo "alias github='cd $data_dir/github'
-alias jayson='cd $data_dir/jayson'
-alias summary='cd $data_dir/summary'
-alias apps='cd $data_dir/apps'
-alias clash='cd $data_dir/apps/clash'
-alias mesa='cd $data_dir/github/mesa'
-alias mesa_main='cd $data_dir/github/mesa_main'
-alias practice='cd $data_dir/practice'
-alias amd_rocm='cd $data_dir/rocm-all-libs-build'
-" >> $current_path/envs/path_alias/path_alias
+  echo "alias github='cd $data/github'
+alias jayson='cd $data/jayson'
+alias summary='cd $data/summary'
+alias apps='cd $data/apps'
+alias clash='cd $data/apps/clash'
+alias mesa='cd $data/github/mesa'
+alias mesa_main='cd $data/github/mesa_main'
+alias practice='cd $data/practice'
+alias amd_rocm='cd $data/rocm-all-libs-build'
+" >> $project/envs/path_alias/path_alias
 
   normal_log "配置自定义别名完成"
+}
+
+# -* 配置自定义Action *-
+function config_action_alias() {
+  normal_log "配置自定义**Action**别名"
+
+  if [ ! -d "$project/envs/action" ]; then
+    normal_log "创建路径 $project/envs/action"
+    mkdir -p $project/envs/action
+  fi
+
+  echo "alias buildscript='bash ${project}/envs/action/create_file/exec_build.sh \$1'
+alias execscript='bash ${project}/envs/action/create_file/exec.sh \$1 \$2'
+alias torch_v='bash ${project}/envs/action/torch/torch_v.sh'
+alias create_swapfile='bash ${project}/envs/action/create_swapfile/create_swapfile.sh'
+" >> $project/envs/action/action_alias
+
+  echo "project=${project}" >> $project/envs/action/project
+  normal_log "配置自定义**Action**别名完成"
+}
+
+# -* 配置ssh *-
+function config_ssh() {
+  normal_log "配置ssh"
+
+  sudo systemctl enable ssh
+  sudo systemctl start ssh
 }
