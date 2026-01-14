@@ -228,8 +228,8 @@ function config_path_alias() {
     mkdir -p $project/envs/path_alias
   fi
 
-  echo "alias github='cd $data/github'
-alias jayson='cd $data/jayson'
+  echo "alias github='cd $data/github && ls'
+alias jayson='cd $data/jayson && ls'
 alias summary='cd $data/summary'
 alias apps='cd $data/apps'
 alias clash='cd $data/apps/clash'
