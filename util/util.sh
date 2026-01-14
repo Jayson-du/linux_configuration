@@ -236,7 +236,7 @@ function config_path_alias() {
 alias jayson='cd $data/jayson && ls'
 alias summary='cd $data/summary'
 alias apps='cd $data/apps'
-alias clash='cd $data/apps/clash'
+alias clash='cd $data/apps/clash && $data/apps/clash/clash -f $data/apps/clash/config.yaml'
 alias mesa='cd $data/github/mesa'
 alias mesa_main='cd $data/github/mesa_main'
 alias practice='cd $data/practice'
