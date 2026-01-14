@@ -11,6 +11,8 @@ fi
 export DEBUG=1
 export MAX_JOBS=$(nproc)
 
+figlet -f big "BUILD TRITON" | lolcat | cowsay -n -f tux
+
 pushd python
 pip install -e "$path/python"
 popd

@@ -38,6 +38,8 @@ declare -A APPS_DICT=(
   ["clangd"]="clangd"
   ["nvim"]="neovim"
   ["figlet"]="figlet"
+  ["cowsay"]="cowsay"
+  ["lolcat"]="lolcat"
 )
 
 # 包数组
