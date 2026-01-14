@@ -228,6 +228,10 @@ function config_path_alias() {
     mkdir -p $project/envs/path_alias
   fi
 
+  if [ -f $project/envs/path_alias/path_alias ]; then
+      rm -f $project/envs/path_alias/path_alias
+  fi
+
   echo "alias github='cd $data/github && ls'
 alias jayson='cd $data/jayson && ls'
 alias summary='cd $data/summary'
@@ -249,6 +253,10 @@ function config_action_alias() {
   if [ ! -d "$project/envs/action" ]; then
     normal_log "创建路径 $project/envs/action"
     mkdir -p $project/envs/action
+  fi
+
+  if [ -f $project/envs/action/action_alias ]; then
+      rm -f $project/envs/action/action_alias
   fi
 
   echo "alias buildscript='bash ${project}/envs/action/create_file/exec_build.sh \$1'
