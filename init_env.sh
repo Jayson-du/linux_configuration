@@ -37,6 +37,7 @@ declare -A APPS_DICT=(
   ["tmux"]="tmux"
   ["clangd"]="clangd"
   ["nvim"]="neovim"
+  ["figlet"]="figlet"
 )
 
 # 包数组

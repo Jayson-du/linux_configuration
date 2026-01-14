@@ -14,6 +14,8 @@ fi
 
 function title() { echo -e "${BLUE_BOLD}# ${1}${RESET}"; }
 
+function start_log() { echo -e "\n${GREEN_BOLD} ${1} ${RESET}\n"; }
+
 function finish() { echo -e "\n${GREEN_BOLD}# Finish!${RESET}\n"; exit 0; }
 
 function userAbort() { echo -e "\n${YELLOW_BOLD}# Abort by user!${RESET}\n"; exit 0; }
