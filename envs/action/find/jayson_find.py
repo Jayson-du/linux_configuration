@@ -26,7 +26,7 @@ def find_files(directory, name, extension, exclude_dirs, recursive, context):
       if file == name :
         file_path = os.path.join(root, file)
         print(f'Searching in: {root}')
-        print(f'{" " * (indent+2)} Found: {file_path}')
+        print(f'{" " * (indent+2)}🤗 Found: {file_path}')
         if context:
           match_context_in_file(root, file_path, context, indent + 4)
       elif extension and any(file.endswith(ext) for ext in extension):
