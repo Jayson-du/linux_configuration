@@ -69,6 +69,8 @@ config_path_alias
 
 config_action_alias
 
+config_export
+
 # install_miniconda
 
 config_vim

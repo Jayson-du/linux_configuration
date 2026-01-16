@@ -165,6 +165,7 @@ source '${project}/envs/action/action_alias'\
 \
 source '${project}/envs/path_alias/path_alias'\
 \
+source '${project}/envs/export/export'\
 conda activate tgi_test
 ' ~/.bashrc
 
@@ -264,6 +265,7 @@ alias execscript='bash ${project}/envs/action/create_file/exec.sh \$1 \$2'
 alias torch_v='bash ${project}/envs/action/torch/torch_v.sh'
 alias create_swapfile='bash ${project}/envs/action/create_swapfile/create_swapfile.sh'
 alias check_gpu_info='python3 ${project}/envs/action/gpu_info/check_gpu_info.py'
+alias jfind='python3 ${project}/envs/action/find/jayson_find.py'
 " >> $project/envs/action/action_alias
 
   echo "project=${project}" >> $project/envs/action/project
@@ -277,3 +279,27 @@ function config_ssh() {
   sudo systemctl enable ssh
   sudo systemctl start ssh
 }
+
+# -* 配置自定义Action *-
+function config_export() {
+  normal_log "配置自定义**环境变量**"
+
+  if [ ! -d "$project/envs/export" ]; then
+    normal_log "创建路径 $project/envs/export"
+    mkdir -p $project/envs/export
+  fi
+
+  echo "export JAYSON_PROJECT=${project}
+" >> $project/envs/export/export
+
+  normal_log "配置自定义**环境变量**完成"
+}
+
+# -* 配置ssh *-
+function config_ssh() {
+  normal_log "配置ssh"
+
+  sudo systemctl enable ssh
+  sudo systemctl start ssh
+}
+
