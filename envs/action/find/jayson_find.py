@@ -1,6 +1,7 @@
 import argparse
 import os
 import regex as re
+from rich.console import Console
 
 def parse_arguments():
   # 获取调用脚本时的当前工作目录
@@ -16,6 +17,7 @@ def parse_arguments():
   return parser.parse_args()
 
 def find_files(directory, name, extension, exclude_dirs, recursive, context):
+  console = Console()
   indent = 0
   for root, dirs, files in os.walk(directory):
     # 排除指定的目录
@@ -29,11 +31,15 @@ def find_files(directory, name, extension, exclude_dirs, recursive, context):
         print(f'{" " * (indent+2)}🤗 Found: {file_path}')
         if context:
           match_context_in_file(root, file_path, context, indent + 4)
+        else:
+          print(f'{" " * (indent+2)}🤗 Found: {file_path}')
       elif extension and any(file.endswith(ext) for ext in extension):
         file_path =  os.path.join(root, file)
         if context:
           match_context_in_file(root, file_path, context, indent + 4)
-
+        else:
+          print(f'Searching in: {root}')
+        console.print(f'{" " * (indent+2)}🤗 Found: [green]{file_path}[/green]')
 def match_context_in_file(root, file_path, search_string, indent):
   split = False
   first_match = True
@@ -54,14 +60,11 @@ def match_context_in_file(root, file_path, search_string, indent):
 if __name__ == "__main__":
   parse_arg = parse_arguments()
 
-  if parse_arg.name or parse_arg.context:
-    find_files(
-      parse_arg.directory,
-      parse_arg.name,
-      parse_arg.extension,
-      parse_arg.exclude_directory,
-      parse_arg.recursive,
-      parse_arg.context
-    )
-  else:
-    print("😂Please provide a file name to search for using --name or -n option.😂")
+  find_files(
+    parse_arg.directory,
+    parse_arg.name,
+    parse_arg.extension,
+    parse_arg.exclude_directory,
+    parse_arg.recursive,
+    parse_arg.context
+  )
