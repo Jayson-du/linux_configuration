@@ -266,6 +266,7 @@ alias torch_v='bash ${project}/envs/action/torch/torch_v.sh'
 alias create_swapfile='bash ${project}/envs/action/create_swapfile/create_swapfile.sh'
 alias check_gpu_info='python3 ${project}/envs/action/gpu_info/check_gpu_info.py'
 alias jfind='python3 ${project}/envs/action/find/jayson_find.py'
+alias battery='bash ${project}/envs/action/battery_capacity/battery_capacity.sh'
 " >> $project/envs/action/action_alias
 
   echo "project=${project}" >> $project/envs/action/project
