@@ -1,0 +1,5 @@
+alias github='cd $data/github && ls'
+alias jayson='cd $data/jayson && ls'
+alias apps='cd $data/apps'
+alias clash='cd $data/apps/clash && $data/apps/clash/clash -f $data/apps/clash/config.yaml'
+alias practice='cd $data/practice'

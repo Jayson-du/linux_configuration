@@ -233,16 +233,12 @@ function config_path_alias() {
       rm -f $project/envs/path_alias/path_alias
   fi
 
-  echo "alias github='cd $data/github && ls'
-alias jayson='cd $data/jayson && ls'
-alias summary='cd $data/summary'
-alias apps='cd $data/apps'
-alias clash='cd $data/apps/clash && $data/apps/clash/clash -f $data/apps/clash/config.yaml'
-alias mesa='cd $data/github/mesa'
-alias mesa_main='cd $data/github/mesa_main'
-alias practice='cd $data/practice'
-alias amd_rocm='cd $data/rocm-all-libs-build'
-" >> $project/envs/path_alias/path_alias
+  sed "s|\$data|$data|g" $project/envs/path_alias/public_path_alias > $project/envs/path_alias/path_alias
+
+  if [ -f "$project/envs/path_alias/private_path_alias" ]; then
+    echo >> $project/envs/path_alias/path_alias && \
+    cat $project/envs/path_alias/private_path_alias >> $project/envs/path_alias/path_alias
+  fi
 
   normal_log "配置自定义别名完成"
 }
