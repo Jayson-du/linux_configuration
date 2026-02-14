@@ -40,6 +40,7 @@ declare -A APPS_DICT=(
   ["figlet"]="figlet"
   ["cowsay"]="cowsay"
   ["lolcat"]="lolcat"
+  ["ccache"]="ccache"
 )
 
 # 包数组
