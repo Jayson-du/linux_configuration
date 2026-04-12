@@ -41,6 +41,7 @@ declare -A APPS_DICT=(
   ["cowsay"]="cowsay"
   ["lolcat"]="lolcat"
   ["ccache"]="ccache"
+  ["lua"]="lua.5.4"
 )
 
 # 包数组
