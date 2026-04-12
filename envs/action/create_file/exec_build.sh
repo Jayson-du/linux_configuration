@@ -17,6 +17,8 @@ if [ ! -d "${path}/build" ]; then
     rm -f ${path}/build/CMakeCache.txt
 fi
 
+git submodule update --init --recursive
+
 cmake -B build                            \
       -DCMAKE_BUILD_TYPE=Debug            \
       -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  \
