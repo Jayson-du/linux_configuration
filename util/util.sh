@@ -100,9 +100,14 @@ function install_miniconda() {
   # 否则使用默认路径 ~/miniconda3
   local install_path=${data:-~/miniconda3}/apps
   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -P ${install_path}/backup
+  local miniconda_size="$(ls -lh "${install_path}/backup/Miniconda3-latest-Linux-x86_64.sh" | awk '{print $5}' | tr -d 'a-zA-Z')"
+  if [ "${miniconda_size}" -lt 156 ]; then
+    error "download miniconda error"
+  fi
   bash ${install_path}/backup/Miniconda3-latest-Linux-x86_64.sh -b -p "$install_path/miniconda3"
 
-  ${install_path}/miniconda3/bin/conda init
+  ${install_path}/miniconda3/_conda init
+  source ${install_path}/miniconda3/bin/activate
   conda create --name dlc python=3.12.12 -y
   conda activate dlc
 }

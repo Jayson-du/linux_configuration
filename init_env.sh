@@ -42,6 +42,7 @@ declare -A APPS_DICT=(
   ["lolcat"]="lolcat"
   ["ccache"]="ccache"
   ["lua"]="lua.5.4"
+  ["clang-format"]="clang-format"
 )
 
 # 包数组
@@ -73,14 +74,12 @@ config_action_alias
 
 config_export
 
-# install_miniconda
-
 config_vim
 
 config_git
 
 # 安装miniconda
-# install_miniconda
+install_miniconda
 
 # 配置ssh
 config_ssh
