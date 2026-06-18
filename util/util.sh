@@ -99,15 +99,18 @@ function install_miniconda() {
   # 安装miniconda到$data/apps/miniconda3， 一般要将miniconda安装到数据盘
   # 否则使用默认路径 ~/miniconda3
   local install_path=${data:-~/miniconda3}/apps
-  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -P ${install_path}/backup
+  if [ ! -f ${install_path}/backup/Miniconda3-latest-Linux-x86_64.sh ]; then
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -P ${install_path}/backup
+  fi
+  # wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -P ${install_path}/backup
   local miniconda_size="$(ls -lh "${install_path}/backup/Miniconda3-latest-Linux-x86_64.sh" | awk '{print $5}' | tr -d 'a-zA-Z')"
   if [ "${miniconda_size}" -lt 156 ]; then
     error "download miniconda error"
   fi
-  bash ${install_path}/backup/Miniconda3-latest-Linux-x86_64.sh -b -p "$install_path/miniconda3"
+  bash "${install_path}"/backup/Miniconda3-latest-Linux-x86_64.sh -b -p "${install_path}/miniconda3"
 
-  ${install_path}/miniconda3/_conda init
-  source ${install_path}/miniconda3/bin/activate
+  "${install_path}"/miniconda3/_conda init
+  source "${install_path}"/miniconda3/bin/activate
   conda create --name dlc python=3.12.12 -y
   conda activate dlc
 }
@@ -229,20 +232,32 @@ function config_vim() {
 function config_path_alias() {
   normal_log "配置自定义别名"
 
-  if [ ! -d "$project/envs/path_alias" ]; then
-    normal_log "创建路径 $project/envs/path_alias"
-    mkdir -p $project/envs/path_alias
+  local alias_dir="$project/envs/path_alias"
+  local target_file="$alias_dir/path_alias"
+
+  if [ ! -d "$alias_dir" ]; then
+    normal_log "创建路径 $alias_dir"
+    mkdir -p "$alias_dir"
   fi
 
-  if [ -f $project/envs/path_alias/path_alias ]; then
-      rm -f $project/envs/path_alias/path_alias
+  # 1. 每次生成前，先清理旧的合并文件
+  if [ -f "$target_file" ]; then
+      rm -f "$target_file"
   fi
 
-  sed "s|\$data|$data|g" $project/envs/path_alias/public_path_alias > $project/envs/path_alias/path_alias
+  # 2. 注入公共配置 (使用 > 创建并写入)
+  if [ -f "$alias_dir/public_path_alias" ]; then
+      sed "s|\$data|$data|g" "$alias_dir/public_path_alias" > "$target_file"
+  else
+      # 如果公共文件不存在，先创建一个空文件兜底，确保后续追加不报错
+      touch "$target_file"
+  fi
 
-  if [ -f "$project/envs/path_alias/private_path_alias" ]; then
-    echo >> $project/envs/path_alias/path_alias && \
-    cat $project/envs/path_alias/private_path_alias >> $project/envs/path_alias/path_alias
+  # 3. 注入并追加私有配置 (使用 >> 追加)
+  if [ -f "$alias_dir/private_path_alias" ]; then
+    # 先追加一个换行符，再追加内容，防止和上一行粘连
+    echo "" >> "$target_file"
+    sed "s|\$data|$data|g" "$alias_dir/private_path_alias" >> "$target_file"
   fi
 
   normal_log "配置自定义别名完成"
@@ -268,6 +283,10 @@ alias create_swapfile='bash ${project}/envs/action/create_swapfile/create_swapfi
 alias check_gpu_info='python3 ${project}/envs/action/gpu_info/check_gpu_info.py'
 alias jfind='python3 ${project}/envs/action/find/jayson_find.py'
 alias battery='bash ${project}/envs/action/battery_capacity/battery_capacity.sh'
+alias now='date \"+%Y-%m-%d %H:%M:%S\"'
+alias today='date \"+%Y年%m月%d日 星期%u\"'
+alias cn-date='date \"+%Y年%m月%d日 %H时%M分%S秒 星期%u\"'
+alias ts='date \"+%Y%m%d_%H%M%S\"'   # 文件名时间戳
 " >> $project/envs/action/action_alias
 
   echo "project=${project}" >> $project/envs/action/project
@@ -305,3 +324,12 @@ function config_ssh() {
   sudo systemctl start ssh
 }
 
+function config_docker() {
+  sudo apt update
+  sudo apt install -y docker.io
+  sudo systemctl start docker
+  sudo systemctl enable docker
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+  newgrp docker
+}
