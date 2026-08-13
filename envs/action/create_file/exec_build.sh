@@ -12,7 +12,7 @@ source "$color_print_sh_path"
 
 path="$(cd $(dirname $0) && pwd)"
 
-if [ ! -d "${path}/build" ]; then
+if [ -d "${path}/build" ] && [ -f "${path}/build/CMakeCache.txt" ]; then
     echo "del CMakeCache.txt"
     rm -f ${path}/build/CMakeCache.txt
 fi
