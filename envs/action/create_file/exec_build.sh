@@ -12,20 +12,44 @@ source "$color_print_sh_path"
 
 path="$(cd $(dirname $0) && pwd)"
 
-if [ -d "${path}/build" ] && [ -f "${path}/build/CMakeCache.txt" ]; then
-    echo "del CMakeCache.txt"
-    rm -f ${path}/build/CMakeCache.txt
+build=${1:-all}
+
+while [[ $# -gt 0 ]]; do
+  case "${1:-}" in
+    -i)
+    build="inc"
+    shift
+    ;;
+    -a)
+    build="all"
+    shift
+    ;;
+    *)
+    shift
+    ;;
+  esac
+done
+
+if [ "$build" == "inc" ]; then
+  if [ ! -d "${path}/build" ]; then
+    error "Build directory does not exist"
+  fi
+elif [ "$build" == "all" ]; then
+  if [ -d "${path}/build" ] && [ -f "${path}/build/CMakeCache.txt" ]; then
+      echo "del CMakeCache.txt"
+      rm -f ${path}/build/CMakeCache.txt
+  fi
+
+  git submodule update --init --recursive
+
+  cmake -B build                            \
+        -DCMAKE_BUILD_TYPE=Debug            \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  \
+        -S ./                               \
+        -GNinja
 fi
 
-git submodule update --init --recursive
-
-cmake -B build                            \
-      -DCMAKE_BUILD_TYPE=Debug            \
-      -DCMAKE_EXPORT_COMPILE_COMMANDS=ON  \
-      -S ./                               \
-      -GNinja
-
-cmake --build build
+cmake --build build -j 32
 EOF
 )
 
