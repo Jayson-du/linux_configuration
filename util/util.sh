@@ -280,6 +280,7 @@ function config_action_alias() {
 alias execscript='bash ${project}/envs/action/create_file/exec.sh \$1 \$2'
 alias torch_v='bash ${project}/envs/action/torch/torch_v.sh'
 alias create_swapfile='bash ${project}/envs/action/create_swapfile/create_swapfile.sh'
+alias gittool='bash ${project}/envs/action/create_file/gittool.sh \$1'
 alias check_gpu_info='python3 ${project}/envs/action/gpu_info/check_gpu_info.py'
 alias jfind='python3 ${project}/envs/action/find/jayson_find.py'
 alias battery='bash ${project}/envs/action/battery_capacity/battery_capacity.sh'
