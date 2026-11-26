@@ -30,12 +30,12 @@ function check_apps_need_install() {
   local app_name=$1
   normal_log "check $app_name..."
 
-  if command -v "$app_name" > /dev/null 2>&1; then
+  if command -v "$app_name" >/dev/null 2>&1; then
     normal_log "$app_name is already installed."
-    return 0   # 已安装
+    return 0 # 已安装
   else
     normal_log "$app_name is not installed."
-    return 1   # 未安装
+    return 1 # 未安装
   fi
 }
 
@@ -158,7 +158,7 @@ function create_env_folder() {
 # -* 配置bashrc *-
 function config_bashrc() {
   # 查看是否已经设置过bashrc了
-  if ( egrep -Hnir "# jayson custom config" ~/.bashrc ); then
+  if (egrep -Hnir "# jayson custom config" ~/.bashrc); then
     normal_log "has configed bashrc"
     return
   fi
@@ -177,7 +177,7 @@ source '${project}/envs/export/export'\
 conda activate tgi_test
 ' ~/.bashrc
 
-source ~/.bashrc
+  source ~/.bashrc
 }
 
 # -* 配置git *-
@@ -242,22 +242,22 @@ function config_path_alias() {
 
   # 1. 每次生成前，先清理旧的合并文件
   if [ -f "$target_file" ]; then
-      rm -f "$target_file"
+    rm -f "$target_file"
   fi
 
   # 2. 注入公共配置 (使用 > 创建并写入)
   if [ -f "$alias_dir/public_path_alias" ]; then
-      sed "s|\$data|$data|g" "$alias_dir/public_path_alias" > "$target_file"
+    sed "s|\$data|$data|g" "$alias_dir/public_path_alias" >"$target_file"
   else
-      # 如果公共文件不存在，先创建一个空文件兜底，确保后续追加不报错
-      touch "$target_file"
+    # 如果公共文件不存在，先创建一个空文件兜底，确保后续追加不报错
+    touch "$target_file"
   fi
 
   # 3. 注入并追加私有配置 (使用 >> 追加)
   if [ -f "$alias_dir/private_path_alias" ]; then
     # 先追加一个换行符，再追加内容，防止和上一行粘连
-    echo "" >> "$target_file"
-    sed "s|\$data|$data|g" "$alias_dir/private_path_alias" >> "$target_file"
+    echo "" >>"$target_file"
+    sed "s|\$data|$data|g" "$alias_dir/private_path_alias" >>"$target_file"
   fi
 
   normal_log "配置自定义别名完成"
@@ -273,7 +273,7 @@ function config_action_alias() {
   fi
 
   if [ -f $project/envs/action/action_alias ]; then
-      rm -f $project/envs/action/action_alias
+    rm -f $project/envs/action/action_alias
   fi
 
   echo "alias buildscript='bash ${project}/envs/action/create_file/exec_build.sh \$1'
@@ -288,9 +288,10 @@ alias now='date \"+%Y-%m-%d %H:%M:%S\"'
 alias today='date \"+%Y年%m月%d日 星期%u\"'
 alias cn-date='date \"+%Y年%m月%d日 %H时%M分%S秒 星期%u\"'
 alias ts='date \"+%Y%m%d_%H%M%S\"'   # 文件名时间戳
-" >> $project/envs/action/action_alias
+alias gdbsc='bash ${project}/envs/action/gdbdebugscript/gdbscript.sh \$1'
+" >>$project/envs/action/action_alias
 
-  echo "project=${project}" >> $project/envs/action/project
+  echo "project=${project}" >>$project/envs/action/project
   normal_log "配置自定义**Action**别名完成"
 }
 
@@ -312,7 +313,7 @@ function config_export() {
   fi
 
   echo "export JAYSON_PROJECT=${project}
-" >> $project/envs/export/export
+" >>$project/envs/export/export
 
   normal_log "配置自定义**环境变量**完成"
 }
